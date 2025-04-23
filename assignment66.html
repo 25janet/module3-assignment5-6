@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Time Page 🌞🌙</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: 'Quicksand', sans-serif;
+      transition: background 1.5s ease, color 1s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 2em;
+      margin-bottom: 20px;
+      animation: slideInLeft 1s ease;
+    }
+
+    .time {
+      text-align: center;
+      font-size: 3em;
+      font-weight: 600;
+      animation: pulse 1.5s ease infinite alternate;
+    }
+
+    .mode-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mode-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.03); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <button class="mode-button" onclick="toggleMode()" id="modeButton">
+    🌙 <span>Dark Mode</span>
+  </button>
+  <div class="greeting" id="greeting">Good Day!</div>
+  <div class="time" id="timeDisplay">--:--:--</div>
+
+  <script>
+    let darkMode = false;
+
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const timeDisplay = document.getElementById("timeDisplay");
+      const greeting = document.getElementById("greeting");
+
+      timeDisplay.textContent = now.toLocaleTimeString();
+
+      let greetingText = "";
+      let bgGradient = "";
+
+      if (hours >= 6 && hours < 12) {
+        greetingText = "Good Morning! Rise and shine ☀️";
+        bgGradient = "linear-gradient(to top right, #DA70D6, #FFD700)";
+      } else if (hours >= 12 && hours < 18) {
+        greetingText = "Good Afternoon! Hope you're having a golden hour 🌞";
+        bgGradient = "linear-gradient(to bottom right, #FFDEAD, #FFD700)";
+      } else {
+        greetingText = "Good Evening!Enjoy the sunset vibes 🌇";
+        bgGradient = "linear-gradient(to top left, #001F3F, #FFD700, #87CEFA)";
+      }
+
+      if (!darkMode) {
+        document.body.style.background = bgGradient;
+        document.body.style.color = "#000";
+        const button = document.getElementById("modeButton");
+        button.innerHTML = `🌙 <span>Dark Mode</span>`;
+        button.style.backgroundColor = "#fff";
+        button.style.color = "#000";
+      }
+
+      greeting.textContent = greetingText;
+    }
+
+    function toggleMode() {
+      darkMode = !darkMode;
+      const button = document.getElementById("modeButton");
+
+      // Smooth fade transition
+      document.body.style.transition = "background 1.5s ease, color 1s ease";
+
+      if (darkMode) {
+        document.body.style.background = "linear-gradient(to bottom, #0f2027, #203a43, #2c5364)";
+        document.body.style.color = "#fff";
+        button.innerHTML = `☀️ <span>Light Mode</span>`;
+        button.style.backgroundColor = "#333";
+        button.style.color = "#fff";
+      } else {
+        updateTime();
+      }
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Time Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      transition: background 1s ease, color 0.5s ease;
+      padding: 50px;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .time {
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease;
+    }
+
+    .greeting {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease;
+    }
+
+    .mode-button {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .mode-button:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="time" id="timeDisplay"></div>
+  <div class="greeting" id="greeting"></div>
+  <button class="mode-button" onclick="toggleMode()">Switch Mode</button>
+
+  <script>
+    let darkMode = false;
+
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const timeDisplay = document.getElementById("timeDisplay");
+      const greeting = document.getElementById("greeting");
+
+      timeDisplay.textContent = now.toLocaleTimeString();
+
+      let greetingText = "Hello!";
+      let bgGradient = "";
+
+      if (hours >= 6 && hours < 12) {
+        bgGradient = "linear-gradient(to top right, #DA70D6, #FFD700)";
+        greetingText = "Good Morning! Rise and shine ☀️";
+      } else if (hours >= 12 && hours < 18) {
+        bgGradient = "linear-gradient(to bottom right, #FFDEAD, #FFD700)";
+        greetingText = "Good Afternoon! Hope you're having a golden hour 🌞";
+      } else {
+        bgGradient = "linear-gradient(to top left, #001F3F, #FFD700, #87CEFA)";
+        greetingText = "Good Evening! Enjoy the sunset vibes 🌇";
+      }
+
+      if (!darkMode) {
+        document.body.style.background = bgGradient;
+        document.body.style.color = "#000";
+        document.querySelector(".mode-button").style.backgroundColor = "#fff";
+        document.querySelector(".mode-button").style.color = "#000";
+      }
+
+      greeting.textContent = greetingText;
+    }
+
+    function toggleMode() {
+      darkMode = !darkMode;
+      if (darkMode) {
+        document.body.style.background = "linear-gradient(to bottom, #0f2027, #203a43, #2c5364)";
+        document.body.style.color = "#fff";
+        document.querySelector(".mode-button").style.backgroundColor = "#444";
+        document.querySelector(".mode-button").style.color = "#fff";
+      } else {
+        updateTime();
+      }
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+</body>
+</html>
