@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Form</title>
+  <style>
+    /* Font and Background */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #8B4513, #DEB887);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Form Styling */
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 350px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      color: #fff8f0;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #eee;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5C4033;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #A0522D;
+      transform: scale(1.05);
+    }
+
+    /* Add some space between sections */
+    .form-section {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="loginform">
+    <div class="form-section">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name:" required />
+    </div>
+
+    <div class="form-section">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email:" required />
+    </div>
+
+    <div class="form-section">
+      <label for="passwd">Password</label>
+      <input type="password" id="passwd" name="password"
+        placeholder="Min 8 characters, 1 number, 1 uppercase"
+        minlength="8"
+        pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}" required />
+    </div>
+
+    <div class="form-section">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Re-enter your password" required />
+    </div>
+
+    <div class="form-section">
+      <label><input type="checkbox" id="agree" required /> I have filled this form correctly</label>
+    </div>
+
+    <input type="submit" id="submit" value="Submit" />
+  </form>
+
+  <script>
+    const form = document.getElementById("loginform");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("name").value.trim();
+      const password = document.getElementById("passwd").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+      const agree = document.getElementById("agree").checked;
+
+      if (!username || !password || !email || !confirmPassword) {
+        alert("Please fill in all the fields.");
+      } else if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+      } else if (!agree) {
+        alert("You must agree that the form is filled correctly.");
+      } else {
+        alert("Form submitted successfully!");
+        form.submit();
+      }
+    });
+  </script>
+
+</body>
+</html>
