@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Register a New Account</h1>
+    <h2>Create Your Account</h2>
+
+    <form id="regForm" action="register.php" method="POST">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+        <label for="phone_number">Phone Number</label>
+        <input type="number" id="number" name="phone_number" required placeholder="Enter your phone number" maxlength="10">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password" minlength="8">
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const phoneNumber = document.getElementById('number').value;
+    const password = document.getElementById('password').value;
+
+    let errorMessage = '';
+    if (username === '') errorMessage += 'Username is required.\n';
+    if (email === '') errorMessage += 'Email is required.\n';
+    if (phoneNumber === '') errorMessage += 'Phone number is required.\n';
+    if (password === '') errorMessage += 'Password is required.\n';
+
+    if (errorMessage !== '') {
+        alert(errorMessage);
+        event.preventDefault();
+    }
+});
+</script>
+
+</body>
+</html>
